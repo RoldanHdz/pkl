@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulario de Predicción</title>
+</head>
+<body>
+    <h1>Formulario para realizar predicción</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="feature1">Característica 1:</label>
+        <input type="text" id="feature1" name="feature1" required><br><br>
+
+        <label for="feature2">Característica 2:</label>
+        <input type="text" id="feature2" name="feature2" required><br><br>
+
+        <label for="feature3">Característica 3:</label>
+        <input type="text" id="feature3" name="feature3" required><br><br>
+
+        <label for="feature4">Característica 4:</label>
+        <input type="text" id="feature4" name="feature4" required><br><br>
+
+        <label for="feature5">Característica 5:</label>
+        <input type="text" id="feature5" name="feature5" required><br><br>
+
+        <input type="submit" value="Enviar">
+    </form>
+</body>
+</html>
