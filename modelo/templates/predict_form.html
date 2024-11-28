@@ -1,29 +1,1053 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
-    <title>Formulario de Predicción</title>
+    <title>Predicción de Causas de Choques</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f2f2f2;
+        }
+
+        .form-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            width: 100%;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .form-grid label {
+            display: block;
+            text-align: left;
+        }
+
+        .form-grid select,
+        .form-grid input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 10px 20px;
+            border-radius: 4px;
+            margin-top: 20px;
+            display: block;
+            width: 100%;
+            grid-column: span 3;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
+
 <body>
-    <h1>Formulario para realizar predicción</h1>
-    <form method="post">
-        {% csrf_token %}
-        <label for="feature1">Característica 1:</label>
-        <input type="text" id="feature1" name="feature1" required><br><br>
+    <div class="form-container">
+        <h1>Predicción de Causas de Choques</h1>
+        <form id="prediction-form" method="post">
+            {% csrf_token %}
+            <div class="form-grid"> <!-- Primera Columna -->
+                <div>
+                    <!-- Selección para Delegación -->
+                    <label for="delegacion">Selecciona la delegación:</label>
+                    <select name="delegacion" id="delegacion">
+                        <option value="1">XALAPA</option>
+                        <option value="0">VERACRUZ</option>
+                    </select>
+                    <br>
+                    <!-- Selección para Día de la Semana -->
+                    <label for="dia_semana">Selecciona el día de la semana:</label>
+                    <select name="dia_semana" id="dia_semana">
+                        <option value="5">MIERCOLES</option>
+                        <option value="6">SABADO</option>
+                        <option value="4">MARTES</option>
+                        <option value="2">JUEVES</option>
+                        <option value="1">DOMINGO</option>
+                        <option value="3">LUNES</option>
+                        <option value="7">VIERNES</option>
+                        <option value="0">NO APLICA</option>
+                    </select>
+                    <br>
+                    <!-- Selección para Localidad del Accidente -->
+                    <label for="localidad_accidente">Selecciona la localidad del accidente:</label>
+                    <select name="localidad_accidente" id="localidad_accidente">
+                        <option value="7">XALAPA</option>
+                        <option value="1">EL CASTILLO</option>
+                        <option value="4">OJO DE AGUA</option>
+                        <option value="2">LA BARRANCA</option>
+                        <option value="5">PLAN DEL RIO</option>
+                        <option value="6">TRANCAS</option>
+                        <option value="3">LAS PUENTES</option>
+                        <option value="0">NO APLICA</option>
+                    </select>
+                    <br>
+                    <!-- Selección para Municipio del Accidente -->
+                    <label for="municipio_accidente">Selecciona el municipio del accidente:</label>
+                    <select name="municipio_accidente" id="municipio_accidente">
+                        <option value="3">XALAPA</option>
+                        <option value="1">EMILIANO ZAPATA</option>
+                        <option value="2">TLALNELHUAYOCAN</option>
+                        <option value="0">NO APLICA</option>
+                    </select>
+                    <br>
+                    <!-- Selección para Zona -->
+                    <label for="zona">Selecciona la zona:</label>
+                    <select name="zona" id="zona">
+                        <option value="2">URBANA</option>
+                        <option value="1">RURAL</option>
+                        <option value="0">NO APLICA</option>
+                    </select>
+                    <br>
 
-        <label for="feature2">Característica 2:</label>
-        <input type="text" id="feature2" name="feature2" required><br><br>
+                    <label for="calle_avenida">Selecciona la calle/avenida:</label>
+                    <select name="calle_avenida" id="calle_avenida">
+                        <option value="391">JUAN SEBASTIAN BACH</option>
+                        <option value="204">CAMINO ANTIGUO A NAOLINCO</option>
+                        <option value="121">AVENIDA RUIZ CORTINES</option>
+                        <option value="114">AVENIDA REBSAMEN</option>
+                        <option value="126">AVENIDA XALAPA</option>
+                        <option value="250">CLAVIJERO</option>
+                        <option value="639">XALAPEÑOS ILUSTRES</option>
+                        <option value="4">20 DE NOVIEMBRE</option>
+                        <option value="308">FRANCISCO MARQUEZ</option>
+                        <option value="170">CALLE BANANAS</option>
+                        <option value="302">AVENIDA LÁZARO CÁRDENAS</option>
+                        <option value="507">NOGALERA</option>
+                        <option value="20">AVENIDA COLÓN</option>
+                        <option value="170">CALLE CALVILLO</option>
+                        <option value="302">ZARAGOZA</option>
+                        <option value="125">CAMINO ANTIGUO A TEZONAPA</option>
+                        <option value="163">AVENIDA UNIVERSIDAD</option>
+                        <option value="350">XALAPA</option>
+                        <option value="217">PRIMERO DE MAYO</option>
+                        <option value="190">HIDALGO</option>
+                        <option value="455">BOULEVARD XALAPA-BUENA VISTA</option>
+                        <option value="256">AVENIDA 20 DE NOVIEMBRE</option>
+                        <option value="87">CARRILLO PUERTO</option>
+                        <option value="120">ZACATECAS</option>
+                        <option value="269">AVENIDA YERBAS BUENAS</option>
+                        <option value="92">CALLE MARTÍN GUTIERREZ</option>
+                        <option value="243">AVENIDA NÁPOLES</option>
+                        <option value="413">FRANCISCO I. MADERO</option>
+                        <option value="195">AVENIDA RIO</option>
+                        <option value="182">DE LOS VIVEROS</option>
+                        <option value="53">PASEO DE LAS ANIMAS</option>
+                        <option value="362">CALLE FELIPE ANGELES</option>
+                        <option value="74">CARRILLO PUERTO</option>
+                        <option value="44">PROLONGACION RAMOS MILLET</option>
+                        <option value="249">CALLE QUINTANA ROO</option>
+                        <option value="102">CAMINO HACIA LA LIBERTAD</option>
+                        <option value="601">PASEO DE LA REFORMA</option>
+                        <option value="338">LA PERDIDA</option>
+                        <option value="33">COLOMBIA</option>
+                        <option value="250">SAN JOSÉ</option>
+                        <option value="101">CALLE JARDIN</option>
+                        <option value="99">CARRETERA EL TEPOZÁN</option>
+                        <option value="150">BOULEVARD XALAPA</option>
+                        <option value="268">CANAL 3</option>
+                        <option value="306">BARRANCA DE HERNÁNDEZ</option>
+                        <option value="228">AVENIDA 5 DE FEBRERO</option>
+                        <option value="210">AVENIDA LA NORIA</option>
+                        <option value="329">CAMINO REAL</option>
+                        <option value="225">CALLE ALFONSO REYES</option>
+                        <option value="222">AVENIDA TULIPÁN</option>
+                        <option value="119">CALLE DE LOS ALCÁZARES</option>
+                        <option value="274">CALLE 6</option>
+                        <option value="266">AVENIDA DE LOS VOLCANES</option>
+                        <option value="103">CALLE DE LA AMISTAD</option>
+                        <option value="182">CALLE LAS PALMAS</option>
+                        <option value="308">CAMINO REAL A TOLUCA</option>
+                        <option value="69">CALLE LAS ROSAS</option>
+                        <option value="359">CARRILLO PUERTO</option>
+                        <option value="240">AVENIDA SANTIAGO</option>
+                        <option value="189">CALLE 12</option>
+                        <option value="109">CALLE XALAPA</option>
+                        <option value="413">CALLE EL LAGO</option>
+                        <option value="257">CALLE ACACIAS</option>
+                        <option value="314">CALLE REAL</option>
+                        <option value="377">CALLE 20 DE NOVIEMBRE</option>
+                        <option value="417">PRIMER FRACCIONAMIENTO</option>
+                        <option value="371">AVENIDA CHOAPAN</option>
+                        <option value="290">CALLE CIUDAD DE MÉXICO</option>
+                        <option value="163">AVENIDA ATLIXCO</option>
+                        <option value="20">AVENIDA LOS PINOS</option>
+                        <option value="201">CALLE VICTORIA</option>
+                        <option value="279">AVENIDA SAN ANTONIO</option>
+                        <option value="315">CALLE CRUZ BLANCA</option>
+                        <option value="284">ALBERTO LÓPEZ MARTÍNEZ</option>
+                        <option value="29">CARRILLO PUERTO</option>
+                        <option value="60">AVENIDA MIRADOR</option>
+                        <option value="74">CALLE 2</option>
+                        <option value="321">AVENIDA CARRIZO</option>
+                        <option value="151">PASEO XALAPA</option>
+                        <option value="174">CALLE LOS PINOS</option>
+                        <option value="226">AVENIDA LOS HÉROES</option>
+                        <option value="103">CAMINO AL PUEBLO</option>
+                        <option value="121">AVENIDA SAN LUIS</option>
+                        <option value="100">AVENIDA JARDINES</option>
+                    </select>
+                    <br>
 
-        <label for="feature3">Característica 3:</label>
-        <input type="text" id="feature3" name="feature3" required><br><br>
 
-        <label for="feature4">Característica 4:</label>
-        <input type="text" id="feature4" name="feature4" required><br><br>
+                    <label for="colonias">Seleccione una colonia:</label> <select id="colonias" name="colonias">
+                        <option value="160">INDECO ANIMAS</option>
+                        <option value="58">CAROLINO ANAYA</option>
+                        <option value="269">PROLONGACION VILLAHERMOSA</option>
+                        <option value="224">MARTIRES DE CHICAGO</option>
+                        <option value="267">PROGRESO MACUILTEPEC</option>
+                        <option value="61">CENTRO</option>
+                        <option value="199">LOMAS DE CHAPULTEPEC</option>
+                        <option value="60">CASA BLANCA</option>
+                        <option value="10">6 DE ENERO</option>
+                        <option value="4">2 DE ABRIL</option>
+                        <option value="73">CUAUHTEMOC</option>
+                        <option value="190">LAS TRANCAS</option>
+                        <option value="93">EL OLMO</option>
+                        <option value="27">ANIMAS</option>
+                        <option value="101">ENCINAL</option>
+                        <option value="183">LA RESERVA</option>
+                        <option value="323">UNIDAD MAGISTERIAL</option>
+                        <option value="172">JOSE CARDEL</option>
+                        <option value="273">RAFAEL LUCIO</option>
+                        <option value="268">PROGRESO MACUILTEPETL</option>
+                        <option value="39">BADILLO</option>
+                        <option value="45">BOLIVIA</option>
+                        <option value="241">OBRERO CAMPESINA</option>
+                        <option value="110">FERRER GUARDIA</option>
+                        <option value="142">FRANCISCO VILLA</option>
+                        <option value="21">ALCAFORD</option>
+                        <option value="156">HERON PROAL</option>
+                        <option value="17">AGUA SANTA 2</option>
+                        <option value="296">SEBASTIAN LERDO DE TEJADA</option>
+                        <option value="234">MONTE MAGNA</option>
+                        <option value="11">7 DE NOVIEMBRE</option>
+                        <option value="276">REPRESA DEL CARMEN</option>
+                        <option value="143">FRANSCISCO I. MADERO</option>
+                        <option value="99">EMILIANO ZAPATA</option>
+                        <option value="46">BOSQUE</option>
+                        <option value="331">UNION</option>
+                        <option value="81">DOLORES HIDALGO</option>
+                        <option value="317">UNIDAD DEL BOSQUE</option>
+                        <option value="280">REVOLUCION</option>
+                        <option value="344">ZONA UNIVERSITARIA</option>
+                        <option value="318">UNIDAD DEL VALLE</option>
+                        <option value="216">MAESTRO</option>
+                        <option value="227">MIRADOR</option>
+                        <option value="205">LOMAS VERDES</option>
+                        <option value="120">FRACCIONAMIENTO ENSUEÑO</option>
+                        <option value="298">SIPHE ANIMAS</option>
+                        <option value="196">LIBERTAD</option>
+                        <option value="191">LAURELES</option>
+                        <option value="341">XALAPA 2000</option>
+                        <option value="285">SALUD</option>
+                        <option value="266">PROGRESO</option>
+                        <option value="250">PASTORESA</option>
+                        <option value="23">ALVARO OBREGON</option>
+                        <option value="204">LOMAS DEL TEJAR</option>
+                        <option value="15">AGUA SANTA</option>
+                        <option value="5">21 DE MARZO</option>
+                        <option value="259">POMONA</option>
+                        <option value="80">DOCTORES</option>
+                        <option value="75">DEL MAESTRO</option>
+                        <option value="309">TATAHUICAPAN</option>
+                        <option value="337">VILLA XALAPA</option>
+                        <option value="272">RAFAEL HERNANDEZ OCHOA</option>
+                        <option value="220">MARGARITA MAZA DE JUAREZ</option>
+                        <option value="141">FRANCISCO I. MADERO</option>
+                        <option value="278">RESERVA TERRITORIAL</option>
+                        <option value="173">JOSE CARRILLO PUERTO</option>
+                        <option value="31">ARBOLEDAS DEL SUMIDERO</option>
+                        <option value="217">MAGISTERIAL</option>
+                        <option value="335">VENUSTIANO CARRANZA</option>
+                        <option value="106">ESTIBADORES</option>
+                        <option value="308">TAMBORREL</option>
+                        <option value="112">FERROCARRILERA</option>
+                        <option value="223">MARTIRES 28 DE AGOSTO</option>
+                        <option value="180">LA MARQUEZA</option>
+                        <option value="55">CAMPO DE TIRO</option>
+                        <option value="19">AGUACATAL</option>
+                        <option value="44">BENITO JUAREZ</option>
+                        <option value="219">MANATIALES</option>
+                        <option value="88">EL LENCERO</option>
+                        <option value="284">SAHOP</option>
+                        <option value="198">LOMAS DE CASA BLANCA</option>
+                        <option value="189">LAS FUENTES</option>
+                        <option value="302">SOSTENES MEJIA BLANCO</option>
+                        <option value="86">EL CASTILLO</option>
+                        <option value="235">MONTE MAGNO</option>
+                        <option value="293">SANTOS DEGOLLADO</option>
+                        <option value="140">FRANCISCO FERRER GUARDIA</option>
+                        <option value="165">ISLETA</option>
+                        <option value="290">SAN BRUNO</option>
+                        <option value="41">BALCONES DE XALAPA</option>
+                        <option value="169">JARDINES DE XALAPA</option>
+                        <option value="333">VASCONCELOS</option>
+                        <option value="209">LOS PINOS</option>
+                        <option value="79">DIQUE</option>
+                        <option value="157">HIDALGO</option>
+                        <option value="186">LAGUNILLA</option>
+                        <option value="114">FOVISSSTE</option>
+                        <option value="97">EL TEJAR</option>
+                        <option value="52">BUROCRATA</option>
+                        <option value="252">PEDREGAL DE LAS ANIMAS</option>
+                        <option value="245">OTILPAN</option>
+                        <option value="151">HERNANDEZ OCHOA</option>
+                        <option value="136">FRACCIONAMIENTO VERACRUZ</option>
+                        <option value="271">PUMAR</option>
+                        <option value="113">FLORESTA</option>
+                        <option value="283">RUBEN PABELLO ACOSTA</option>
+                        <option value="231">MOCTEZUMA</option>
+                        <option value="305">SUPER CHE</option>
+                        <option value="82">DURANGO</option>
+                        <option value="150">GUADALUPE VICTORIA</option>
+                        <option value="137">FRACCIONAMIENTO XALAPA 2000</option>
+                        <option value="78">DIAZ MIRON</option>
+                        <option value="307">TAMAUILIPAS</option>
+                        <option value="193">LAZARO CARDENAS</option>
+                        <option value="336">VERACRUZ</option>
+                        <option value="215">MACUILTEPETL</option>
+                        <option value="292">SANTA ROSA</option>
+                        <option value="324">UNIDAD MAGISTRAL</option>
+                        <option value="54">CAMINOS</option>
+                        <option value="24">AMPLIACION LIBERTAD</option>
+                        <option value="334">VELLA VISTA</option>
+                        <option value="13">ADALBERTO TEJEDA</option>
+                        <option value="226">MIGUEL HIDALGO</option>
+                        <option value="35">ARROYO BLANCO</option>
+                        <option value="139">FRAMBOYANES</option>
+                        <option value="340">VIRGINIA CORDERO</option>
+                        <option value="29">ARAUCARIAS</option>
+                        <option value="304">SOSTENES MEJIA BLANCO</option>
+                        <option value="208">EL CASTILLO</option>
+                        <option value="255">MONTE MAGNO</option>
+                        <option value="122">SANTOS DEGOLLADO</option>
+                        <option value="74">FRANCISCO FERRER GUARDIA</option>
+                        <option value="240">ISLETA</option>
+                        <option value="132">SAN BRUNO</option>
+                        <option value="264">BALCONES DE XALAPA</option>
+                        <option value="166">JARDINES DE XALAPA</option>
+                        <option value="301">VASCONCELOS</option>
+                        <option value="229">LOS PINOS</option>
+                        <option value="233">DIQUE</option>
+                        <option value="330">HIDALGO</option>
+                        <option value="20">LAGUNILLA</option>
+                        <option value="221">FOVISSSTE</option>
+                        <option value="118">EL TEJAR</option>
+                        <option value="176">BUROCRATA</option>
+                        <option value="275">PEDREGAL DE LAS ANIMAS</option>
+                        <option value="214">OTILPAN</option>
+                        <option value="115">HERNANDEZ OCHOA</option>
+                        <option value="164">FRACCIONAMIENTO VERACRUZ</option>
+                        <option value="313">PUMAR</option>
+                        <option value="49">FLORESTA</option>
+                        <option value="90">RUBEN PABELLO ACOSTA</option>
+                        <option value="63">MOCTEZUMA</option>
+                        <option value="158">SUPER CHE</option>
+                        <option value="16">DURANGO</option>
+                        <option value="179">GUADALUPE VICTORIA</option>
+                        <option value="94">FRACCIONAMIENTO XALAPA 2000</option>
+                        <option value="286">DIAZ MIRON</option>
+                        <option value="125">TAMAUILIPAS</option>
+                        <option value="0">LAZARO CARDENAS</option>
+                        <option value="68">VERACRUZ</option>
+                        <option value="230">MACUILTEPETL</option>
+                        <option value="130">SANTA ROSA</option>
+                        <option value="314">UNIDAD MAGISTRAL</option>
+                        <option value="295">CAMINOS</option>
+                        <option value="201">AMPLIACION LIBERTAD</option>
+                        <option value="96">VELLA VISTA</option>
+                        <option value="328">ADALBERTO TEJEDA</option>
+                        <option value="146">MIGUEL HIDALGO</option>
+                        <option value="200">ARROYO BLANCO</option>
+                        <option value="177">FRAMBOYANES</option>
+                        <option value="7">VIRGINIA CORDERO</option>
+                        <option value="51">ARAUCARIAS</option>
+                        <option value="257">TEJAR</option>
+                        <option value="315">EBANO</option>
+                        <option value="117">MANANTIALES</option>
+                        <option value="325">ARENALES</option>
+                        <option value="135">CERRO COLORADO</option>
+                        <option value="182">UNIDAD HABITACIONAL DEL BOSQUE</option>
+                        <option value="185">SANTA FE</option>
+                        <option value="144">OBREROS TEXTILES</option>
+                        <option value="76">SOSTENES M. BLANCO</option>
+                        <option value="85">INFONAVIT SUMIDERO</option>
+                        <option value="105">SUMIDERO</option>
+                        <option value="236">LOS LAURELES</option>
+                        <option value="256">PEÑASCAL</option>
+                        <option value="265">FRACCIONAMIENTO LA PRADERA</option>
+                        <option value="262">DEL BOSQUE</option>
+                        <option value="108">OBRERA CAMOESINA</option>
+                        <option value="306">FRACCIONAMIENTO POMARROSA</option>
+                        <option value="338">PREDIO DE LA VIRGEN</option>
+                        <option value="37">JACARANDAS</option>
+                        <option value="243">SOSTENES MEJIA</option>
+                        <option value="103">MIRADORES DEL MAR</option>
+                        <option value="98">MODELO</option>
+                        <option value="56">UNIDAN HABITACIONAL SUMIDERO</option>
+                        <option value="327">AGUIRRE BELTRAN</option>
+                        <option value="133">MARIA ESTHER</option>
+                        <option value="6">FRACCIONAMIENTO COLIBRI</option>
+                        <option value="126">JUAN BRUNO</option>
+                        <option value="3">REFORMA</option>
+                        <option value="124">LUZ DEL BARRIO</option>
+                        <option value="102">FRACCIONAMIENTO ANIMAS</option>
+                        <option value="203">INMECAFE</option>
+                        <option value="239">TREBOL</option>
+                        <option value="187">BUENA VISTA</option>
+                        <option value="65">EL MIRADOR</option>
+                        <option value="127">CERRO DE LAS GALAXIAS</option>
+                        <option value="8">HIGUERAS</option>
+                        <option value="202">AGUA SANTA 1</option>
+                        <option value="343">LA LAGUNILLA</option>
+                        <option value="109">EL PEÑASCAL</option>
+                        <option value="36">SALVADOR DIAZ MIRON</option>
+                        <option value="72">FRACCIONAMIENTO LAS FUENTES</option>
+                        <option value="288">10 DE MAYO</option>
+                        <option value="149">COLIBRI</option>
+                        <option value="71">MISION SAN CARLOS</option>
+                        <option value="87">FRACCIONAMIENTO MONTE MAGNO</option>
+                        <option value="228">TRES DE MAYO</option>
+                        <option value="163">SEBASTIAN LERDO</option>
+                        <option value="332">LOMAS DEL ESTADIO</option>
+                        <option value="175">EL TANQUE</option>
+                        <option value="48">UNIDAD Y PROGRESO</option>
+                        <option value="116">FRENTE A LA SCT.</option>
+                        <option value="18">LOMAS DE SAN ROQUE</option>
+                        <option value="168">JUSTO SIERRA</option>
+                        <option value="91">28 DE AGOSTO</option>
+                        <option value="297">BUGAMBILIAS</option>
+                        <option value="238">PLAN DE AYALA</option>
+                        <option value="26">UCISVER</option>
+                        <option value="128">FRACCIONAMIENTO BUGAMBILIAS</option>
+                        <option value="319">UNIDAD POMONA</option>
+                        <option value="329">FRACCIONAMIENTO SANTA ROSA</option>
+                        <option value="270">LA PIEDAD</option>
+                        <option value="153">LADEROS MACUILTEPEC</option>
+                        <option value="111">FRANSCISCO VILLA</option>
+                        <option value="312">DESARROLLO SOCIAL</option>
+                        <option value="70">EL BOSQUE</option>
+                        <option value="22">ESTHER BADILLO</option>
+                        <option value="154">MURILLO VIDAL</option>
+                        <option value="67">PICO DE ORIZABA</option>
+                        <option value="123">PRINCIPAL LAS TRANCAS</option>
+                        <option value="311">PRADERO</option>
+                        <option value="147">FEDERAL</option>
+                        <option value="147">TABASCO</option>
+                        <option value="12">VILLAS DE XALAPA</option>
+                        <option value="33">AZTECA</option>
+                        <option value="206">OJO DE AGUA</option>
+                        <option value="282">ESPINA BLANCA</option>
+                        <option value="212">ELECTRICISTAS</option>
+                        <option value="237">CAMPO NUEVO</option>
+                        <option value="161">UNIDAD VERACRUZANA</option>
+                        <option value="59">FRACCIONAMIENTO POMONA</option>
+                        <option value="152">24 DE ABRIL</option>
+                        <option value="14">FRACCIONAMIENTO LAS PALMAS</option>
+                        <option value="170">18 DE MARZO</option>
+                        <option value="66">FRACCIONAMIENTO LAS CASCADAS</option>
+                        <option value="25">ENSUEÑO</option>
+                        <option value="28">LOMAS DEL PARAISO</option>
+                        <option value="263">NUEVO XALAPA</option>
+                        <option value="95">LAS ANIMAS</option>
+                        <option value="258">CIRCUITO GUISAR Y VALENCIA</option>
+                        <option value="321">LOMAS DE LAS HACIENDAS</option>
+                        <option value="291">3 DE MAYO</option>
+                        <option value="242">LOMAS DEL ESTADO</option>
+                        <option value="300">ZEMPOALA</option>
+                        <option value="162">FELIPE CARRILLO PUERTO</option>
+                        <option value="304">AVENIDA XALAPA Y SONORA</option>
+                        <option value="208">CORDERO VIRGINIO</option>
+                        <option value="255">SAN ANTONIO</option>
+                        <option value="122">GUADALUPE RODRIGUEZ</option>
+                        <option value="74">CONTRIBUYENTES</option>
+                        <option value="240">EL ENCINAL</option>
+                        <option value="132">MIRADORES</option>
+                        <option value="264">INGENIEROS</option>
+                        <option value="166">VALLE RUBI</option>
+                        <option value="301">JUAN DE LA LUZ ENRIQUEZ</option>
+                        <option value="229">BRISAS DEL SUMIDERO</option>
+                        <option value="233">FRACCIONAMIENTO ARBOLEDAS</option>
+                        <option value="330">AGUA SANTA UNO</option>
+                        <option value="20">JARDINES DE LAS ANIMAS</option>
+                        <option value="221">EL MORAL</option>
+                        <option value="118">SEBASTIAN LERDO DE TEJEDA</option>
+                        <option value="176">NUEVO LEON</option>
+                        <option value="275">ANAHUATL ANIMAS</option>
+                        <option value="214">FRACCIONAMIENTO LOS ANGELES</option>
+                        <option value="115">UNIDAD EL BOSQUE</option>
+                        <option value="164">UNIDAD Y TRABAJO</option>
+                        <option value="313">PROVIPO</option>
+                        <option value="49">HEROES FERROCARRILERO</option>
+                        <option value="90">FERROCARRIL INTEROCEANICO</option>
+                        <option value="63">TRANCAS</option>
+                        <option value="158">CONSTITUYENTES</option>
+                        <option value="16">ALCAMFOR</option>
+                        <option value="179">HEROES FERROCARRILEROS</option>
+                        <option value="94">COAPEXPAN</option>
+                        <option value="286">FRACCIONAMIENTO LAS ANIMAS</option>
+                        <option value="125">TLALNEHUAYOCAN</option>
+                        <option value="0">FTE. A GRUAS SEAX</option>
+                        <option value="68">ACUEDUCTO</option>
+                        <option value="230">ARCO SUR</option>
+                        <option value="130">LOS ANGELES</option>
+                        <option value="314">ROTARIA</option>
+                        <option value="295">LUCIO</option>
+                        <option value="201">NIÑOS HEROES</option>
+                        <option value="96">INDEPENDENCIA</option>
+                        <option value="328">CARRILLO PUERTO</option>
+                        <option value="146">HEROES</option>
+                        <option value="200">ADOLFO LOPEZ MATEOS</option>
+                        <option value="177">JARDINES DEL CASTILLO</option>
+                        <option value="7">CN</option>
+                        <option value="51">AMPLIACION MURILLO VIDAL</option>
+                        <option value="257">ANTORCHISTAS</option>
+                        <option value="315">PREDIO DE LA MUJER</option>
+                        <option value="117">EL PORVENIR</option>
+                        <option value="325">PLAZA ANIMAS</option>
+                        <option value="135">BRIONES</option>
+                        <option value="182">REPRESA SAN BRUNO</option>
+                        <option value="185">RESIDENCIAL DEL BOSQUE</option>
+                        <option value="144">LAVOIGHNET</option>
+                        <option value="76">AZUETA</option>
+                        <option value="85">PELICANOS</option>
+                        <option value="105">PRADERAS</option>
+                        <option value="236">BELLA VISTA</option>
+                        <option value="256">FRACCIONAMIENTO DALIAS</option>
+                        <option value="265">LOMA ALTA</option>
+                        <option value="262">BELISARIO DOMINGUEZ</option>
+                        <option value="108">SOSTENES ROCHA</option>
+                        <option value="306">LOS SAUCES</option>
+                        <option value="338">LA PEDREGUERA</option>
+                        <option value="37">REBSAMEN</option>
+                        <option value="243">PALO BLANCO</option>
+                        <option value="103">LA HACIENDITA</option>
+                        <option value="98">BALCONES</option>
+                        <option value="56">PONIENTE 2</option>
+                        <option value="327">LUCIO BLANCO</option>
+                        <option value="133">SAN BRAVO</option>
+                        <option value="6">FRACCIONAMINETO VILLA</option>
+                        <option value="126">LADERAS DE MACUILTEPEC</option>
+                        <option value="3">HERON PEREZ</option>
+                        <option value="124">SAUCES</option>
+                        <option value="102">BUROCRATAS</option>
+                        <option value="203">HORTENCIA</option>
+                        <option value="239">MIGUEL ALEMAN</option>
+                        <option value="187">LEALTAD CONSTITUCIONAL</option>
+                        <option value="65">FRACCIONAMIENTO MORADA DEL QUETZAL</option>
+                        <option value="127">EL ARENAL</option>
+                        <option value="8">JARDIN DE LAS LUZ ENRIQUE</option>
+                        <option value="202">PASO LIMON</option>
+                        <option value="343">MARINA NACIONAL</option>
+                        <option value="109">FRACCIONAMIENTO LUCAS MARTIN</option>
+                        <option value="36">UNIDAD HABITACIONAL SANTA ROSA</option>
+                        <option value="72">LERDO DE TEJADA</option>
+                        <option value="288">RIO SORDO</option>
+                        <option value="149">VIRGINIA AGUILAR CORDERO</option>
+                        <option value="71">ARBOLEDAS DE XALAPA</option>
+                        <option value="87">LAS CASCADAS</option>
+                        <option value="228">5 DE MAYO</option>
+                        <option value="163">ESTANCIA GARNICA</option>
+                        <option value="332">BUGAMBIALIAS</option>
+                        <option value="175">LOS ARENALES</option>
+                        <option value="48">UNIDAD PROGRESO</option>
+                        <option value="116">EZEQUIEL ALATRISTE</option>
+                        <option value="18">CHOPIN</option>
+                        <option value="168">SOLIDARIDAD</option>
+                        <option value="91">UNIDAD EL SUMIDERO</option>
+                        <option value="297">JOSE VASCONCELOS</option>
+                        <option value="238">EL OLMECA</option>
+                        <option value="26">EL MAESTROS</option>
+                        <option value="128">PALO VERDE</option>
+                        <option value="319">ZAPATA</option>
+                        <option value="329">PASO LADRILLO</option>
+                        <option value="270">CONSTITUCION DEL SUMIDERO</option>
+                        <option value="153">UNIDA</option>
+                        <option value="111">FRACCIONAMIENTO FUENTES</option>
+                        <option value="312">CARDEL</option>
+                        <option value="70">FRAY BARTOLOME DE OLMEDO</option>
+                        <option value="22">OLMOS</option>
+                        <option value="154">FRACCIONAMIENTO SAN FRANCISCO</option>
+                        <option value="67">12 DE MARZO</option>
+                        <option value="123">LUCAS MARTIN</option>
+                        <option value="311">12 DE DICIEMBRE</option>
+                        <option value="147">PEDREGAL</option>
+                        <option value="147">ARBOLEDAS DEL TRONCONAL</option>
+                        <option value="12">EMPLEADOS MUNICIPALES</option>
+                        <option value="33">JARDINES DEL SUMIDERO</option>
+                        <option value="206">GILDARDO AVILES</option>
+                        <option value="282">SAN ANDRES TLANEHUAYOCAN</option>
+                        <option value="212">MOCTEZUMA RESERVA TERRITORIAL</option>
+                        <option value="237">PERSEVERANCIA</option>
+                        <option value="161">DESCONOCIDA</option>
+                    </select>
+                    <br>
 
-        <label for="feature5">Característica 5:</label>
-        <input type="text" id="feature5" name="feature5" required><br><br>
+                    <label for="condiciones_via">Condiciones de la vía:</label> <select id="condiciones_via"
+                        name="condiciones_via">
+                        <option value="0">BUENO</option>
+                        <option value="2">MALO</option>
+                        <option value="3">REGULAR</option>
+                        <option value="1">nan</option>
+                    </select>
+                    <br>
 
-        <input type="submit" value="Enviar">
-    </form>
+                    <label for="condiciones_naturales">Condiciones naturales:</label> <select id="condiciones_naturales"
+                        name="condiciones_naturales">
+                        <option value="3">SOLEADO</option>
+                        <option value="2">NIEBLA</option>
+                        <option value="1">LLUVIA</option>
+                        <option value="4">TOLVANERA</option>
+                        <option value="0">GRANIZO</option>
+                    </select>
+                    <br>
+                </div>
+                <!-- Segunda Columna -->
+                <div>
+                    <label for="superficie_via">Superficie de la vía:</label> <select id="superficie_via"
+                        name="superficie_via">
+                        <option value="0">ASFALTO</option>
+                        <option value="1">CONCRETO</option>
+                        <option value="5">TERRACERIA</option>
+                        <option value="3">EMPEDRADO</option>
+                        <option value="6">TERRACERÍA</option>
+                        <option value="4">SOLEADO</option>
+                        <option value="2">nan</option>
+                    </select>
+                    <br>
+
+                    <label for="estado_via">Estado de la vía:</label> <select id="estado_via" name="estado_via">
+                        <option value="2">SECO</option>
+                        <option value="1">MOJADO</option>
+                        <option value="0">nan</option>
+                    </select>
+                    <br>
+
+                    <label for="tangente">Tangente:</label> <select id="tangente" name="tangente">
+                        <option value="0">A NIVEL</option>
+                        <option value="1">ASCENDENTE</option>
+                        <option value="2">DESCENDENTE</option>
+                        <option value="3">nan</option>
+                    </select>
+                    <br>
+
+                    <label for="control_transito">Tipo de control de tránsito:</label> <select id="control_transito"
+                        name="control_transito">
+                        <option value="4">NINGUNA</option>
+                        <option value="6">SEMAFORO FUNCIONANDO</option>
+                        <option value="8">SEMÁFORO FUNCIONANDO</option>
+                        <option value="3">MARCA EN PAVIMENTO</option>
+                        <option value="9">SEÑAL CEDA EL PASO</option>
+                        <option value="5">SEMAFORO DESCOMPUESTO</option>
+                        <option value="10">SEÑAL DE ALTO</option>
+                        <option value="7">SEMÁFORO DESCOMPUESTO</option>
+                        <option value="1">AGENTE DE TRÁNSITO</option>
+                        <option value="0">AGENTE DE TRANSITO</option>
+                        <option value="2">nan</option>
+                    </select>
+                    <br>
+
+                    <label for="restricciones_via">Restricciones de la vía:</label> <select id="restricciones_via"
+                        name="restricciones_via">
+                        <option value="10">SIN RESTRICCIÓN</option>
+                        <option value="9">SIN RESTRICCION</option>
+                        <option value="0">ACCIDENTE PREVIO</option>
+                        <option value="6">OBRA EN CONSTRUCCION</option>
+                        <option value="1">COLISIÓN</option>
+                        <option value="3">DESVIACION PROVISIONAL</option>
+                        <option value="7">OBRA EN CONSTRUCCIÓN</option>
+                        <option value="8">SEMAFORO FUNCIONADO</option>
+                        <option value="5">OBJETO SOBRE CAMINO</option>
+                        <option value="4">HOYO/ZANJA</option>
+                        <option value="2">nan</option>
+                    </select>
+                    <br>
+
+                    <label for="tipo_accidente">Tipo de accidente:</label> <select id="tipo_accidente"
+                        name="tipo_accidente">
+                        <option value="2">COLISIÓN</option>
+                        <option value="1">COLISION</option>
+                        <option value="0">ATROPELLAMIENTO</option>
+                        <option value="8">VOLCADURA</option>
+                        <option value="7">SALIDA DE CAMINO</option>
+                        <option value="6">OTRO</option>
+                        <option value="4">INCENDIO</option>
+                        <option value="5">INMERSIÓN</option>
+                        <option value="3">nan</option>
+                    </select>
+                    <br>
+
+                    <label for="forma_accidente">Forma de accidentarse:</label> <select id="forma_accidente"
+                        name="forma_accidente">
+                        <option value="9">ÁNGULO</option>
+                        <option value="5">LATERAL</option>
+                        <option value="6">MANIOBRA EN REVERSA</option>
+                        <option value="8">POR ALCANCE</option>
+                        <option value="0">ANGULO</option>
+                        <option value="3">FALLA MECANICA</option>
+                        <option value="1">DE FRENTE</option>
+                        <option value="4">FALLA MECÁNICA</option>
+                        <option value="7">OTRO</option>
+                        <option value="2">nan</option>
+                    </select>
+                    <br>
+
+                    <label for="impacto">Contra qué fue el impacto:</label> <select id="impacto" name="impacto">
+                        <option value="6">VEHÍCULO ESTACIONADO</option>
+                        <option value="5">VEHÍCULO CIRCULANDO</option>
+                        <option value="3">VEHICULO CIRCULANDO</option>
+                        <option value="1">OBJETO FIJO</option>
+                        <option value="4">VEHICULO ESTACIONADO</option>
+                        <option value="2">OTRO</option>
+                        <option value="0">nan</option>
+                    </select>
+                    <br>
+
+                    <label for="cantidad_vehiculos">Cantidad de vehículos:</label>
+                    <input type="number" id="cantidad_vehiculos" name="cantidad_vehiculos" min="0" step="1"
+                        placeholder="Ingrese la cantidad de vehículos">
+                    <br>
+                </div> <!-- Tercera Columna -->
+                <div>
+                    <label for="tipo_vehiculo">Tipo de vehículo:</label> <select id="tipo_vehiculo"
+                        name="tipo_vehiculo">
+                        <option value="4">OTROS</option>
+                        <option value="1">C - CAMIONETA</option>
+                        <option value="0">A - AUTOMOVIL</option>
+                        <option value="3">M - MOTOCICLETA</option>
+                        <option value="2">CC - CAMION DE CARGA</option>
+                    </select>
+                    <br>
+
+                    <label for="marca">Marca:</label> <select id="marca" name="marca">
+                        <option value="4">OTRAS</option>
+                        <option value="3">NISSAN</option>
+                        <option value="0">CHEVROLET</option>
+                        <option value="6">VOLKSWAGEN</option>
+                        <option value="2">HONDA</option>
+                        <option value="1">FORD</option>
+                        <option value="5">TOYOTA</option>
+                    </select>
+                    <br>
+
+                    <label for="entidad_federativa">Entidad federativa del vehículo:</label> <select
+                        id="entidad_federativa" name="entidad_federativa">
+                        <option value="26">VERACRUZ</option>
+                        <option value="23">TABASCO</option>
+                        <option value="6">DISTRITO FEDERAL</option>
+                        <option value="18">PUEBLA</option>
+                        <option value="14">MÉXICO</option>
+                        <option value="11">MEXICO</option>
+                        <option value="9">HIDALGO</option>
+                        <option value="19">QUERETARO</option>
+                        <option value="7">GUANAJUATO</option>
+                        <option value="2">CHIAPAS</option>
+                        <option value="25">TLAXCALA</option>
+                        <option value="13">MORELOS</option>
+                        <option value="1">CAMPECHE</option>
+                        <option value="22">SAN LUIS POTOSÍ</option>
+                        <option value="24">TAMAULIPAS</option>
+                        <option value="21">QUINTANA ROO</option>
+                        <option value="16">NUEVO LEÓN</option>
+                        <option value="10">JALISCO</option>
+                        <option value="12">MICHOACÁN</option>
+                        <option value="20">QUERÉTARO</option>
+                        <option value="27">YUCATAN</option>
+                        <option value="17">OAXACA</option>
+                        <option value="15">NUEVO LEON</option>
+                        <option value="3">CHIHUAHUA</option>
+                        <option value="0">BAJA CALIFORNIA</option>
+                        <option value="8">GUERRERO</option>
+                        <option value="4">COAHUILA</option>
+                        <option value="5">nan</option>
+                    </select>
+                    <br>
+
+                    <label for="color_vehiculo">Color del vehículo:</label> <select id="color_vehiculo"
+                        name="color_vehiculo">
+                        <option value="31">BLANCO</option>
+                        <option value="158">TITANIO</option>
+                        <option value="123">PLATA</option>
+                        <option value="136">ROJO</option>
+                        <option value="44">BLANCO/ROJO</option>
+                        <option value="46">BLANCO/VERDE</option>
+                        <option value="15">AZUL</option>
+                        <option value="85">GRIS</option>
+                        <option value="110">NEGRO</option>
+                        <option value="164">VERDE</option>
+                        <option value="37">BLANCO/AZUL</option>
+                        <option value="5">AMARILLO</option>
+                        <option value="9">ARENA</option>
+                        <option value="41">BLANCO/NARANJA</option>
+                        <option value="140">ROJO/BLANCO</option>
+                        <option value="28">BEIGE</option>
+                        <option value="131">PLATINO</option>
+                        <option value="82">GRAFITO</option>
+                        <option value="170">VINO</option>
+                        <option value="11">AURORA</option>
+                        <option value="76">CIRUELA</option>
+                        <option value="90">GUINDA</option>
+                        <option value="66">CASHIMIRE</option>
+                        <option value="57">CAFE</option>
+                        <option value="107">NARANJA/BLANCO</option>
+                        <option value="125">PLATA METALICO</option>
+                        <option value="167">VERDE/BLANCO</option>
+                        <option value="124">PLATA DIAMANTE</option>
+                        <option value="72">CHAMPAGNE</option>
+                        <option value="134">ROJA</option>
+                        <option value="60">CANELA</option>
+                        <option value="152">SE DESCONOCE</option>
+                        <option value="106">NARANJA</option>
+                        <option value="18">AZUL MARINO</option>
+                        <option value="139">ROJO/AMARILLO</option>
+                        <option value="163">VERACRUZ</option>
+                        <option value="70">CEREZA</option>
+                        <option value="35">BLANCO POLAR</option>
+                        <option value="59">CAFÉ</option>
+                        <option value="165">VERDE OLIVO</option>
+                        <option value="114">NEGRO/ROJO</option>
+                        <option value="79">DORADO</option>
+                        <option value="161">TURQUESA</option>
+                        <option value="98">MARRON</option>
+                        <option value="171">VINO/ROJO</option>
+                        <option value="105">MOSS GRAY</option>
+                        <option value="89">GRIS/PLATA</option>
+                        <option value="117">ORO</option>
+                        <option value="93">JADE</option>
+                        <option value="155">SIN NUMERO</option>
+                        <option value="141">ROJO/BRILLANTE</option>
+                        <option value="145">ROJO/TORNADO</option>
+                        <option value="43">BLANCO/POLAR</option>
+                        <option value="8">ANTRACITA</option>
+                        <option value="147">ROSA</option>
+                        <option value="172">WHITE MEGA</option>
+                        <option value="142">ROJO/GRIS</option>
+                        <option value="86">GRIS MAGNESIO</option>
+                        <option value="129">PLATEADO</option>
+                        <option value="45">BLANCO/ROSA</option>
+                        <option value="77">CREMA</option>
+                        <option value="115">NEHRA</option>
+                        <option value="151">SANDSTONE</option>
+                        <option value="162">VBLANCO</option>
+                        <option value="121">PINK</option>
+                        <option value="25">AZUL/NEGRO</option>
+                        <option value="61">CAPUCCINO</option>
+                        <option value="173">ZAFIRO</option>
+                        <option value="42">BLANCO/NEGRO</option>
+                        <option value="39">BLANCO/CAFÉ</option>
+                        <option value="0">ACERO</option>
+                        <option value="36">BLANCO/AMARILLO</option>
+                        <option value="99">MERCURIO</option>
+                        <option value="65">CARBON FLAXH</option>
+                        <option value="40">BLANCO/CREMA</option>
+                        <option value="80">DUSTY</option>
+                        <option value="160">TRIGO</option>
+                        <option value="144">ROJO/NEGRO</option>
+                        <option value="64">CARBON</option>
+                        <option value="23">AZUL/AMARILLO</option>
+                        <option value="92">HORIZON BLUE</option>
+                        <option value="32">BLANCO CANDY</option>
+                        <option value="146">ROJO/VERDE</option>
+                        <option value="111">NEGRO/GRIS</option>
+                        <option value="29">BHP094290</option>
+                        <option value="63">CAQUI</option>
+                        <option value="47">BLANCPO/VERDE</option>
+                        <option value="17">AZUL CLARO</option>
+                        <option value="56">BROWNISH</option>
+                        <option value="2">ALMENDRA</option>
+                        <option value="53">BRAWNISH</option>
+                        <option value="130">PLATINA</option>
+                        <option value="62">CAPUCHINO</option>
+                        <option value="55">BRONCE</option>
+                        <option value="132">PLOMO</option>
+                        <option value="68">CASTAÑO</option>
+                        <option value="109">NEGRA GRIS</option>
+                        <option value="7">ANARANJADO</option>
+                        <option value="138">ROJO VINO</option>
+                        <option value="83">GRANITO</option>
+                        <option value="73">CHAMPAGUE</option>
+                        <option value="49">BLANO/VERDE</option>
+                        <option value="123">MAGENTA</option>
+                        <option value="136">AZUL TOSSA</option>
+                        <option value="44">PEWTER</option>
+                        <option value="46">CAFE/AMARILLO</option>
+                        <option value="15">ROYAL BLUE</option>
+                        <option value="85">ALUMIO METALICO</option>
+                        <option value="110">AZUL/PLATA</option>
+                        <option value="164">BLU</option>
+                        <option value="37">MORADO</option>
+                        <option value="5">AZU MARINO</option>
+                        <option value="9">PLATA-OXIDO</option>
+                        <option value="41">CHANPANGE</option>
+                        <option value="140">METALICO</option>
+                        <option value="28">VERDE/ACERO</option>
+                        <option value="131">ROYAL</option>
+                        <option value="82">GRIS METALICO</option>
+                        <option value="170">NEGRO/PLATA</option>
+                        <option value="11">OFICIAL</option>
+                        <option value="76">CHEDRON</option>
+                        <option value="90">PLATA OXIDO</option>
+                        <option value="66">CASHMERE</option>
+                        <option value="57">BLANO.</option>
+                        <option value="107">BLANCO MARFIL</option>
+                        <option value="125">VERDE/GRIS</option>
+                        <option value="167">BLUE WEB</option>
+                        <option value="124">TERRACOTA</option>
+                        <option value="72">GIALLO ATTIM</option>
+                        <option value="134">AZUL POLAR</option>
+                        <option value="60">SILVERT TOUCH</option>
+                        <option value="152">GRIS URANO</option>
+                        <option value="106">BLUE DENIM</option>
+                        <option value="18">BRILLANTE</option>
+                        <option value="139">MALVA METALICO</option>
+                        <option value="163">ROJO TORNADO</option>
+                        <option value="70">MORA</option>
+                        <option value="35">MERZURIO</option>
+                        <option value="59">PERLA</option>
+                        <option value="165">AVELLANA</option>
+                        <option value="114">BLANCO PERLA</option>
+                        <option value="79">PINK LADY</option>
+                        <option value="161">ROJA/AZUL</option>
+                        <option value="98">ROSADO</option>
+                        <option value="171">ARENA/ROJO</option>
+                        <option value="105">HECHO EN USA</option>
+                        <option value="89">ROJO/NEG</option>
+                        <option value="117">CCC066840</option>
+                        <option value="93">AMARILLO/NEGRO</option>
+                        <option value="155">SE IGNORA</option>
+                        <option value="141">PINA LADY</option>
+                        <option value="145">AZUL METALICO</option>
+                        <option value="43">MAGNESIO</option>
+                        <option value="8">JENGIBLE</option>
+                        <option value="147">AZUK</option>
+                        <option value="172">AZUL/GRIS</option>
+                        <option value="142">BLACK</option>
+                        <option value="86">NEGRO/NARANJA</option>
+                        <option value="129">BLANCO/AZUL/ROJO</option>
+                        <option value="45">AZUL PLATA</option>
+                        <option value="77">CEREZA OSCURO</option>
+                        <option value="115">GREEN BYTE</option>
+                        <option value="151">PLATA/NEGRO</option>
+                        <option value="162">MOKA</option>
+                        <option value="121">ACERO METALICO</option>
+                        <option value="25">TEALFLY</option>
+                        <option value="61">NARANJA/NEGRO</option>
+                        <option value="173">ALUMINIO</option>
+                        <option value="42">RED CHIP</option>
+                        <option value="39">B</option>
+                        <option value="0">VERDE/ROJO</option>
+                        <option value="36">AZUL ACERO</option>
+                        <option value="99">nan</option>
+                    </select>
+                    <br>
+
+                    <label for="servicio_vehiculo">Tipo de servicio para el que se ocupan los vehículos:</label> <select
+                        id="servicio_vehiculo" name="servicio_vehiculo">
+                        <option value="3">P - PARTICULAR</option>
+                        <option value="6">PE - PÚBLICO ESTATAL</option>
+                        <option value="8">PF- PÚBLICO FEDERAL</option>
+                        <option value="7">PE-PUBLICO ESTATAL</option>
+                        <option value="5">P-PARTICULAR</option>
+                        <option value="1">O - OFICIAL</option>
+                        <option value="9">PF-PUBLICO FEDERAL</option>
+                        <option value="2">O-OFICIAL</option>
+                        <option value="10">PUBLICO ESTATAL</option>
+                        <option value="4">P-ESTATAL</option>
+                        <option value="0">nan</option>
+                    </select>
+                    <br>
+
+                    <label for="edad_conductor">Edad del conductor:</label>
+                    <input type="number" id="edad_conductor" name="edad_conductor" min="0" step="1"
+                        placeholder="Ingrese la edad del conductor">
+                    <br>
+
+                    <label for="sexo_conductor">Sexo del conductor:</label> <select id="sexo_conductor"
+                        name="sexo_conductor">
+                        <option value="1">HOMBRE</option>
+                        <option value="2">MUJER</option>
+                        <option value="0">nan</option>
+                    </select>
+                    <br>
+
+                    <label for="tipo_licencia">Tipo de licencia:</label> <select id="tipo_licencia"
+                        name="tipo_licencia">
+                        <option value="1">B</option>
+                        <option value="0">A</option>
+                        <option value="2">C</option>
+                        <option value="3">D</option>
+                        <option value="4">nan</option>
+                    </select>
+                    <br>
+
+                    <label for="licencia_vigente">Licencia vigente:</label> <select id="licencia_vigente"
+                        name="licencia_vigente">
+                        <option value="2">SI</option>
+                        <option value="1">NO</option>
+                        <option value="0">nan</option>
+                    </select>
+
+                </div> <button type="submit">Predecir</button>
+        </form>
+    </div>
+    <!-- Script para enviar el formulario -->
+    <script> document.getElementById('prediction-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const formData = new FormData(this);
+            const features = [];
+            formData.forEach((value, key) => {
+                features.push(parseFloat(value)); // Convierte los valores a float (ajustar según el tipo) 
+            }); fetch('http://127.0.0.1:8000/predict/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                },
+                body: JSON.stringify({
+                    features: features,
+                }),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.prediction) {
+                        alert('Predicción: ' + data.prediction);
+                    } else {
+                        alert('Error: ' + data.error);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }); 
+    </script>
 </body>
+
 </html>
