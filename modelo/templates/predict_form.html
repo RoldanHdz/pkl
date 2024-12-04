@@ -69,8 +69,29 @@
 </head>
 
 <body>
+    <div>
+        <li>
+            <ol>0: 'ABRIR PUERTA SIN PRECAUCION'</ol>
+            <ol>1: 'ABRIR PUERTA SIN PRECAUCIÓN'</ol>
+            <ol>2: 'ALCOHOL / DROGAS'</ol>
+            <ol>3: 'ALCOHOL/DROGAS'</ol>
+            <ol>4: 'CAMBIAR CARRIL SIN PRECAUCION'</ol>
+            <ol>5: 'CAMBIAR CARRIL SIN PRECAUCIÓN'</ol>
+            <ol>6: 'CIRCULAR EN SENTIDO CONTRARIO'</ol>
+            <ol>7: 'DISTRACCIÓN AL CONDUCIR'</ol>
+            <ol>8: 'EXCESO DE DIMENSIONES'</ol>
+            <ol>9: 'NO GUARDAR DISTANCIA'</ol>
+            <ol>10: 'NO RESPETAR CEDA EL PASO'</ol>
+            <ol>11: 'NO RESPETAR SEMAFORO'</ol>
+            <ol>12: 'NO RESPETAR SEMÁFORO'</ol>
+            <ol>13: 'NO RESPETAR SEÑAL DE ALTO'</ol>
+            <ol>14: 'OTRO'</ol>
+            <ol>15: 'REBASAR INDEBIDAMENTE'</ol>
+            <ol>16: 'VELOCIDAD INMODERADA'</ol>
+        </li>
+    </div>
     <div class="form-container">
-        <h1>Predicción de Causas de Choques</h1>
+        <h1>Predicción de Causas de Choques en Xalapa, Veracruz</h1>
         <form id="prediction-form" method="post">
             {% csrf_token %}
             <div class="form-grid"> <!-- Primera Columna -->
@@ -82,19 +103,7 @@
                         <option value="0">VERACRUZ</option>
                     </select>
                     <br>
-                    <!-- Selección para Día de la Semana -->
-                    <label for="dia_semana">Selecciona el día de la semana:</label>
-                    <select name="dia_semana" id="dia_semana">
-                        <option value="5">MIERCOLES</option>
-                        <option value="6">SABADO</option>
-                        <option value="4">MARTES</option>
-                        <option value="2">JUEVES</option>
-                        <option value="1">DOMINGO</option>
-                        <option value="3">LUNES</option>
-                        <option value="7">VIERNES</option>
-                        <option value="0">NO APLICA</option>
-                    </select>
-                    <br>
+                   
                     <!-- Selección para Localidad del Accidente -->
                     <label for="localidad_accidente">Selecciona la localidad del accidente:</label>
                     <select name="localidad_accidente" id="localidad_accidente">
@@ -736,7 +745,7 @@
                     <br>
                 </div> <!-- Tercera Columna -->
                 <div>
-                    <label for="tipo_vehiculo">Tipo de vehículo:</label> <select id="tipo_vehiculo"
+                    <label for="tipo_vehiculo">Tipo de vehículo causante:</label> <select id="tipo_vehiculo"
                         name="tipo_vehiculo">
                         <option value="4">OTROS</option>
                         <option value="1">C - CAMIONETA</option>
@@ -746,7 +755,7 @@
                     </select>
                     <br>
 
-                    <label for="marca">Marca:</label> <select id="marca" name="marca">
+                    <label for="marca">Marca dek vehiculo causante:</label> <select id="marca" name="marca">
                         <option value="4">OTRAS</option>
                         <option value="3">NISSAN</option>
                         <option value="0">CHEVROLET</option>
@@ -757,7 +766,7 @@
                     </select>
                     <br>
 
-                    <label for="entidad_federativa">Entidad federativa del vehículo:</label> <select
+                    <label for="entidad_federativa">Entidad federativa del vehículo causante:</label> <select
                         id="entidad_federativa" name="entidad_federativa">
                         <option value="26">VERACRUZ</option>
                         <option value="23">TABASCO</option>
@@ -790,7 +799,7 @@
                     </select>
                     <br>
 
-                    <label for="color_vehiculo">Color del vehículo:</label> <select id="color_vehiculo"
+                    <label for="color_vehiculo">Color del  causante:</label> <select id="color_vehiculo"
                         name="color_vehiculo">
                         <option value="31">BLANCO</option>
                         <option value="158">TITANIO</option>
@@ -968,7 +977,7 @@
                     </select>
                     <br>
 
-                    <label for="servicio_vehiculo">Tipo de servicio para el que se ocupan los vehículos:</label> <select
+                    <label for="servicio_vehiculo">Tipo de servicio del vehiculo causante:</label> <select
                         id="servicio_vehiculo" name="servicio_vehiculo">
                         <option value="3">P - PARTICULAR</option>
                         <option value="6">PE - PÚBLICO ESTATAL</option>
@@ -984,12 +993,12 @@
                     </select>
                     <br>
 
-                    <label for="edad_conductor">Edad del conductor:</label>
+                    <label for="edad_conductor">Edad del conductor causante:</label>
                     <input type="number" id="edad_conductor" name="edad_conductor" min="0" step="1"
                         placeholder="Ingrese la edad del conductor">
                     <br>
 
-                    <label for="sexo_conductor">Sexo del conductor:</label> <select id="sexo_conductor"
+                    <label for="sexo_conductor">Sexo del conductor causante:</label> <select id="sexo_conductor"
                         name="sexo_conductor">
                         <option value="1">HOMBRE</option>
                         <option value="2">MUJER</option>
@@ -997,7 +1006,7 @@
                     </select>
                     <br>
 
-                    <label for="tipo_licencia">Tipo de licencia:</label> <select id="tipo_licencia"
+                    <label for="tipo_licencia">Tipo de licencia del conductor causante:</label> <select id="tipo_licencia"
                         name="tipo_licencia">
                         <option value="1">B</option>
                         <option value="0">A</option>
@@ -1007,16 +1016,22 @@
                     </select>
                     <br>
 
-                    <label for="licencia_vigente">Licencia vigente:</label> <select id="licencia_vigente"
+                    <label for="licencia_vigente">Licencia vigente del vehiculo causante:</label> <select id="licencia_vigente"
                         name="licencia_vigente">
                         <option value="2">SI</option>
                         <option value="1">NO</option>
                         <option value="0">nan</option>
                     </select>
 
+                    
+                
                 </div> <button type="submit">Predecir</button>
         </form>
+
+            
+    
     </div>
+    
     <!-- Script para enviar el formulario -->
     <script> document.getElementById('prediction-form').addEventListener('submit', function (event) {
             event.preventDefault();
@@ -1025,7 +1040,11 @@
             const features = [];
             formData.forEach((value, key) => {
                 features.push(parseFloat(value)); // Convierte los valores a float (ajustar según el tipo) 
-            }); fetch('http://127.0.0.1:8000/predict/', {
+            }); 
+            
+            //alert('Número de características:' +  features.length);
+            
+            fetch('http://127.0.0.1:8000/predict/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -1048,6 +1067,9 @@
                 });
         }); 
     </script>
+
+   
 </body>
+
 
 </html>

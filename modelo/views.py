@@ -7,7 +7,7 @@ import json
 import numpy as np
 
 # Ruta al archivo del modelo
-MODEL_PATH = os.path.join(os.path.dirname(__file__), 'model', 'xgboost_model_roldan.pkl')
+MODEL_PATH = os.path.join(os.path.dirname(__file__), 'model', 'xgboost_model_sin_fecha.pkl')
 
 # Cargar el modelo entrenado al iniciar el servidor
 model = joblib.load(MODEL_PATH)
@@ -31,7 +31,6 @@ causa_atrib_conductor = {
     0: 'ABRIR PUERTA SIN PRECAUCION',
     8: 'EXCESO DE DIMENSIONES',
     1: 'ABRIR PUERTA SIN PRECAUCIÓN',
-    7: 'nan'
 }
 
 @csrf_exempt
@@ -58,10 +57,18 @@ def predict(request):
                 prediction_list = prediction.tolist()
 
                 # Obtener el texto correspondiente a la predicción
-                causa = causa_atrib_conductor.get(prediction_list[0], "Desconocido")
+                prediction_value = prediction_list[0]
+
+                # Depuración: Imprimir el valor de la predicción
+                print("Predicción:", prediction_value)
+
+                causa = causa_atrib_conductor.get(prediction_value, "Desconocido")
+
+                # Depuración: Imprimir la causa mapeada
+                print("Causa:", causa)
 
                 # Retornar la predicción y su causa correspondiente como respuesta JSON
-                return JsonResponse({'prediction': prediction_list, 'causa': causa})
+                return JsonResponse({'prediction': prediction_value, 'causa': causa_atrib_conductor})
 
             else:
                 return JsonResponse({'error': 'No features provided'}, status=400)
